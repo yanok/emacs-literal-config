@@ -144,10 +144,13 @@
 * Start up
 
   Start with the scratch buffer; no start up screen.
+  And maximize the frame on startup.
 
   #+NAME: startup
   #+BEGIN_SRC emacs-lisp
     (setq inhibit-startup-screen +1)
+    (require 'maxframe)
+    (add-hook 'window-setup-hook 'maximize-frame t)
   #+END_SRC
 
 * Formatting and white-space

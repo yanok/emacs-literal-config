@@ -38,6 +38,7 @@
 (depends-on "litable")
 (depends-on "magit")
 (depends-on "markdown-mode")
+(depends-on "maxframe")
 (depends-on "org")
 (depends-on "org-plus-contrib")
 (depends-on "pallet")
