@@ -320,6 +320,21 @@
    #+BEGIN_SRC emacs-lisp
           (global-rinari-mode +1)
    #+END_SRC
+** Haskell
+   Init haskell-mode
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+   #+END_SRC
+
+   Init ghc-mod
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (autoload 'ghc-init "ghc" nil t)
+     (add-hook 'haskell-mode-hook
+               (lambda ()
+                 (ghc-init)))
+   #+END_SRC
 * TODO Auto Complete
 
   Getting auto completion to work right tends to be a messy process of
