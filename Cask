@@ -15,6 +15,7 @@
 (depends-on "color-theme-solarized")
 (depends-on "dash")
 (depends-on "epl")
+(depends-on "evil")
 (depends-on "exec-path-from-shell")
 (depends-on "f")
 (depends-on "findr")

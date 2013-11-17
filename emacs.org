@@ -341,11 +341,14 @@
   As far as reasonable, I try to keep my custom key bindings within
   the "official" restraints. Specifically, I want my global key
   bindings to start with =C-c [lower case letter]=.
+  Hmm.. no, actually I want to use Evil mode, so there is no
+  reason to stick to official keybindings. Screw them...
 
   #+name: global-keys
   #+BEGIN_SRC emacs-lisp
     (global-set-key "\C-cg" 'magit-status)
     (global-set-key "\C-cq" 'delete-indentation)
+    (evil-mode)
   #+END_SRC
 
 * Global navigation
