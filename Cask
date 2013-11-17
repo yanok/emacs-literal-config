@@ -11,6 +11,8 @@
 (depends-on "clojure-mode")
 (depends-on "clojure-test-mode")
 (depends-on "clojurescript-mode")
+(depends-on "color-theme")
+(depends-on "color-theme-solarized")
 (depends-on "dash")
 (depends-on "epl")
 (depends-on "exec-path-from-shell")

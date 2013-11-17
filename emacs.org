@@ -63,6 +63,16 @@
 
    #+END_SRC
 
+** Color theme
+
+   I really like [[http://ethanschoonover.com/solarized][Solarized]] color-theme in its dark incarnation.
+
+   #+name: look-and-feel
+   #+BEGIN_SRC emacs-lisp
+     (color-theme-initialize)
+     (color-theme-solarized-dark)
+   #+END_SRC
+
 ** Reduce clutter
 
    Remove the toolbar. It's ugly and I never use it. Also remove the
