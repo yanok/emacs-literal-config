@@ -335,6 +335,13 @@
      ;;           (lambda ()
      ;;             (ghc-init)))
    #+END_SRC
+** Agda
+   Load agda-mode
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (load-file (let ((coding-system-for-read 'utf-8))
+        (shell-command-to-string "agda-mode locate")))
+   #+END_SRC
 * TODO Auto Complete
 
   Getting auto completion to work right tends to be a messy process of
