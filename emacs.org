@@ -327,6 +327,12 @@
    #+BEGIN_SRC emacs-lisp
           (global-rinari-mode +1)
    #+END_SRC
+** Python
+   Python-mode
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+
+   #+END_SRC
 ** Haskell
    Init haskell-mode
    #+name: programming-setup

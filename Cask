@@ -48,6 +48,7 @@
 (depends-on "paredit")
 (depends-on "pkg-info")
 (depends-on "plantuml-mode")
+(depends-on "python-mode")
 (depends-on "rainbow-delimiters")
 (depends-on "rhtml-mode")
 (depends-on "rinari")
