@@ -30,6 +30,7 @@
 (depends-on "git-rebase-mode")
 (depends-on "graphviz-dot-mode")
 (depends-on "haskell-mode")
+(depends-on "highlight-indentation")
 (depends-on "highlight-parentheses")
 (depends-on "htmlize")
 (depends-on "ido-yes-or-no")
