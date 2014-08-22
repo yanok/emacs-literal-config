@@ -39,6 +39,23 @@
     than the one you're starting. Check your ~$PATH~ and/or aliases.
 
 * Graphics and looks
+** Color theme
+   I really like [[http://ethanschoonover.com/solarized][Solarized]] color-theme in its dark incarnation.
+
+   #+name: look-and-feel
+   #+BEGIN_SRC emacs-lisp
+     (color-theme-initialize)
+     (color-theme-solarized-dark)
+   #+END_SRC
+
+** Nyan Cat will show you where you are!
+
+   Because, why not?
+   #+name: look-and-feel
+   #+BEGIN_SRC emacs-lisp
+     (nyan-mode +1)
+   #+END_SRC
+
 
 ** Font
 
@@ -68,16 +85,6 @@
    #+BEGIN_SRC emacs-lisp
      (require 'unicode-fonts)
      (unicode-fonts-setup)
-   #+END_SRC
-
-** Color theme
-
-   I really like [[http://ethanschoonover.com/solarized][Solarized]] color-theme in its dark incarnation.
-
-   #+name: look-and-feel
-   #+BEGIN_SRC emacs-lisp
-     (color-theme-initialize)
-     (color-theme-solarized-dark)
    #+END_SRC
 
 ** Reduce clutter
@@ -113,14 +120,11 @@
 
 ** Mode line
 
-   The default Mode Line is confusing and boring. Using
-   sml-smart-mode-line it's a bit nicer to look at and more
-   informative.
+   The default Mode Line is confusing and boring. Right now I like powerline.
 
    #+NAME: look-and-feel
    #+BEGIN_SRC emacs-lisp
-     (require 'smart-mode-line)
-     (sml/setup)
+     '(powerline-center-theme)
    #+END_SRC
 
 ** Scrolling behavior
@@ -146,6 +150,26 @@
    #+BEGIN_SRC emacs-lisp
      (setq mouse-wheel-follow-mouse 't)
      (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+   #+END_SRC
+
+** Buffer names
+   Setup uniquify so that non-unique buffer names get the parent path
+   included to make them unique.
+   #+NAME: look-and-feel
+   #+BEGIN_SRC emacs-lisp
+     (require 'uniquify)
+     (setq uniquify-buffer-name-style 'forward)
+   #+END_SRC
+
+** Window configuration
+   #+NAME: look-and-feel
+   #+BEGIN_SRC emacs-lisp
+     (require 'sticky-windows)
+
+     (global-set-key     [(control x) (?0)]        'sticky-window-delete-window)
+     (global-set-key     [(control x) (?1)]        'sticky-window-delete-other-windows)
+     (global-set-key     [(control x) (?9)]        'sticky-window-keep-window-visible)
+
    #+END_SRC
 
 * Start up
@@ -196,6 +220,19 @@
    #+END_SRC
 
 * Programming
+** General programming
+
+   I want to use pretty-symbols mode for all programming.
+
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (defun my/prog-mode-hooks ()
+       (my/turn-on 'pretty-symbols))
+
+     (add-hook 'prog-mode-hook
+               'my/prog-mode-hooks)
+   #+END_SRC
+
 ** Pair programming
 
    Normally, I think line numbers in code editors just take up space,
@@ -227,7 +264,7 @@
        my/pair-programming-mode
        (lambda () (my/pair-programming-mode 1)))
 
-     (global-set-key "\C-cp" 'my/global-pair-programming-mode)
+     (global-set-key "\C-c\M-p" 'my/global-pair-programming-mode)
    #+END_SRC
 
 ** Lisps
@@ -247,6 +284,14 @@
      (dolist (mode (mapcar 'my/->mode-hook my/lisps))
        (add-hook mode
                  'my/general-lisp-hooks))
+   #+END_SRC
+** Emacs Lisp
+   #+NAME: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (defun my/emacs-lisp-hooks ()
+       (my/turn-on 'eldoc-mode))
+
+     (add-hook 'emacs-lisp-mode-hook 'my/emacs-lisp-hooks)
    #+END_SRC
 
 ** Clojure
@@ -311,10 +356,9 @@
 
    #+name: programming-setup
    #+BEGIN_SRC emacs-lisp
-
-      (dolist (exp '("Rakefile\\'" "\\.rake\\'"))
-        (add-to-list 'auto-mode-alist
-                     (cons exp 'ruby-mode)))
+     (dolist (exp '("Rakefile\\'" "\\.rake\\'"))
+       (add-to-list 'auto-mode-alist
+                    (cons exp 'ruby-mode)))
 
    #+END_SRC
 
@@ -325,8 +369,40 @@
 
    #+NAME: programming-setup
    #+BEGIN_SRC emacs-lisp
-          (global-rinari-mode +1)
+     (global-rinari-mode +1)
    #+END_SRC
+** Perl
+   I still occasionally need to work on Perl code, so I have a few
+   basic settings to make that reasonably painless.
+
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (fset 'perl-mode 'cperl-mode) ;; force cperl mode
+
+     (defun my/cperl-mode-hooks ()
+       (my/turn-on flymake-mode))
+
+     (add-hook 'cperl-mode-hook 'my/cperl-mode-hooks)
+   #+END_SRC
+** Javascript
+
+   I use JS2-mode for javascript source.
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . js2-mode))
+   #+END_SRC
+
+** JSON
+
+   For JSON-formatted files, I use the default js-mode, which accepts
+   top-level bare objects (which is incorrect behaviour for
+   javascript, but the default in JSON).
+
+   #+name: programming-setup
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . js-mode))
+   #+END_SRC
+
 ** Python
    Python-mode
    #+name: programming-setup
@@ -361,6 +437,30 @@
    #+BEGIN_SRC emacs-lisp
      (load-file "/Users/ilya/src/ProofGeneral/generic/proof-site.el")
    #+END_SRC
+
+** Compilation mode improvements
+
+*** ANSI Colors
+
+    See http://stackoverflow.com/questions/3072648/cucumbers-ansi-colors-messing-up-emacs-compilation-buffer
+
+    #+name: programming-setup
+    #+BEGIN_SRC emacs-lisp
+     (require 'ansi-color)
+     (defun colorize-compilation-buffer ()
+       (toggle-read-only)
+       (ansi-color-apply-on-region (point-min) (point-max))
+       (toggle-read-only))
+     (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+    #+END_SRC
+
+*** Follow output
+
+    #+name: programming-setup
+    #+BEGIN_SRC emacs-lisp
+     (setq compilation-scroll-output t)
+    #+END_SRC
+
 * TODO Auto Complete
 
   Getting auto completion to work right tends to be a messy process of
@@ -413,6 +513,19 @@
     (ido-yes-or-no-mode +1)
 
     (global-set-key "\M-x" 'smex)
+  #+END_SRC
+
+** Projects
+
+   Projectile is useful. Especially, ~projectile-replace~ and
+   ~projectile-find-file~.
+
+   Projectile commands are bound with the default ~C-c p~ prefix. So I
+   can type ~C-c p C-h~ to list all of them.
+
+  #+name: global-navigation
+  #+BEGIN_SRC emacs-lisp
+    (projectile-global-mode +1)
   #+END_SRC
 
 * Org Mode
@@ -503,25 +616,20 @@
 
 ** Org-Babel
 
-   Use syntax highlighting ("fontification") in org-mode source
-   blocks, and use a slightly darker background to visually separate
-   the source block from its surroundings.
+*** Fontifying source blocks
 
-   This also highlights source blocks in HTML exports.
+    Enable yntax highlighting in src blocks.
+    #+name: org-config
+    #+BEGIN_SRC emacs-lisp
+      (setq-default org-src-fontify-natively t)
+    #+END_SRC
 
-   #+name: org-config
-   #+BEGIN_SRC emacs-lisp
-     (setq org-src-fontify-natively 't)
-     (set-face-attribute 'org-block-background nil
-                         :background "#f0f0e8")
-   #+END_SRC
+    Use the =minted= package for syntax highlighting source blocks in
+    LaTeX / PDF exports. [[http://joat-programmer.blogspot.nl/2013/07/org-mode-version-8-and-pdf-export-with.html][Configuration copied from a blog post
+    by Florian Bergmann.]]
 
-   Use the =minted= package for syntax highlighting source blocks in
-   LaTeX / PDF exports. [[http://joat-programmer.blogspot.nl/2013/07/org-mode-version-8-and-pdf-export-with.html][Configuration copied from a blog post
-   by Florian Bergmann.]]
-
-   #+name: org-config
-   #+BEGIN_SRC emacs-lisp
+    #+name: org-config
+    #+BEGIN_SRC emacs-lisp
      ;; Include the latex-exporter
      (require 'ox-latex)
      ;; Add minted to the defaults packages to include when exporting.
@@ -532,15 +640,20 @@
      ;; Let the exporter use the -shell-escape option to let latex
      ;; execute external programs.
      ;; This obviously and can be dangerous to activate!
+
+     ;; I use pdflatex instead of xelatex because that seems to work
+     ;; much better with utf-8 files
      (setq org-latex-pdf-process
-           '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+           '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
-   #+END_SRC
+    #+END_SRC
 
-   Untangle files.
+    Untangle files.
 
-   #+name: org-config
-   #+BEGIN_SRC emacs-lisp
+    #+name: org-config
+    #+BEGIN_SRC emacs-lisp
      (global-set-key "\C-cu" 'my/org-babel-untangle)
 
      (defun my/org-babel-untangle (path)
@@ -567,7 +680,7 @@
              (cl-remove-if 'file-directory-p
                            (f-files path (lambda (p) t) t))))
 
-   #+END_SRC
+    #+END_SRC
 
 ** Language evaluation support
 
@@ -644,6 +757,14 @@
    #+BEGIN_SRC emacs-lisp
      (setq org-latex-pdf-process (list "latexmk -f -pdf -shell-escape %f"))
    #+END_SRC
+
+* Other libraries
+  Loading ~dired+~ improves ~dired~.
+  #+name: libraries
+  #+BEGIN_SRC emacs-lisp
+    (require 'dired+)
+  #+END_SRC
+
 * Configuration file layout
 
   Here I define the emacs.el file that gets generated by the code in
@@ -667,6 +788,7 @@
     <<global-keys>>
     <<global-navigation>>
     <<org-config>>
+    <<libraries>>
     <<startup>>
   #+END_SRC
 
@@ -728,26 +850,14 @@
       (exec-path-from-shell-initialize))
   #+END_SRC
 
-* Monkey Patches
-** TODO Org-Indent-Region fix
+  External packages may be dropped in the .emacs.d directory.
 
-   I need to submit this as a patch.
+  #+NAME: environment
+  #+BEGIN_SRC emacs-lisp
+    (add-to-list 'load-path "~/.emacs.d")
+  #+END_SRC
 
-   #+NAME: monkey-patches
-   #+BEGIN_SRC emacs-lisp
-    (eval-after-load 'org
-      '(defun org-indent-region (start end)
-         "Indent region."
-         (interactive "r")
-         (save-excursion
-           (let ((line-end (org-current-line end)))
-             (goto-char start)
-             (while (< (org-current-line) line-end)
-               (cond ((org-in-src-block-p t) (org-src-native-tab-command-maybe))
-                     (t (call-interactively 'org-indent-line)))
-               (move-beginning-of-line 2))))))
 
-   #+END_SRC
 * Options set using the customize interface
 
   By default, Emacs saves the options you set via the `customize-*`
