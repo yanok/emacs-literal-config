@@ -36,6 +36,7 @@
 (depends-on "git-gutter")
 (depends-on "git-gutter-fringe")
 (depends-on "git-rebase-mode")
+(depends-on "geiser")
 (depends-on "graphviz-dot-mode")
 (depends-on "haskell-mode")
 (depends-on "highlight-indentation")
