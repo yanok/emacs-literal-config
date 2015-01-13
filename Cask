@@ -20,6 +20,7 @@
 (depends-on "dash")
 (depends-on "dired+")
 (depends-on "discover")
+(depends-on "ebib")
 (depends-on "efire")
 (depends-on "epl")
 (depends-on "evil")
