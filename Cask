@@ -75,6 +75,7 @@
 (depends-on "rinari")
 (depends-on "rspec-mode")
 (depends-on "ruby-compilation")
+(depends-on "rust-mode")
 (depends-on "rvm")
 (depends-on "s")
 (depends-on "slamhound")
