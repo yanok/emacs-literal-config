@@ -2,10 +2,11 @@
 (cask-initialize)
 
 (when (not (cl-remove-if-not 
-	    (lambda (p) (equal 'org (car p)))
+	    (lambda (p) (or (equal 'org (car p))
+                            (equal 'org-plus-contrib (car p))))
 	    package-alist))
   (message "No org-mode package found; installing now...")
-  (package-install 'org))
+  (package-install 'org-plus-contrib))
 
 (require 'org)
 (when (string-match "^[1234567]" (org-version))
